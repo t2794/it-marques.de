@@ -58,7 +58,7 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' https://img.icons8.com; frame-ancestors 'none'; base-uri 'self';">
     <script>
         function hashPassword(password) {
-            return btoa(password); // Bas64-Hash als einfache Demonstration
+            return btoa(password); // Base64-Hash als einfache Demonstration
         }
 
         function checkPassword() {
@@ -66,9 +66,11 @@
             const userPassword = prompt("Bitte geben Sie das Passwort ein:");
             if (hashPassword(userPassword) === hashedPassword) {
                 document.body.style.display = "block";
+                console.log("Passwort korrekt, Inhalt wird angezeigt.");
             } else {
                 alert("Falsches Passwort.");
-                checkPassword();
+                console.log("Falsches Passwort eingegeben.");
+                checkPassword(); // Fordert das Passwort erneut an
             }
         }
         window.onload = checkPassword;
