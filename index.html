@@ -52,15 +52,18 @@
         }
     </style>
     <script>
-        function hashPassword(password) {
-            return btoa(password); // Base64-Hash als einfache Demonstration
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hash = await crypto.subtle.digest('SHA-512', data);
+            return Array.from(new Uint8Array(hash)).map(byte => byte.toString(16).padStart(2, '0')).join('');
         }
 
-        function checkPassword() {
-            const correctHashedPassword = "VG9iaWFzQ1Y="; // Base64 von "TobiasCV"
+        async function checkPassword() {
+            const correctHashedPassword = "2c74fd17edafd80e8447b0d46741ee243b7eb74f9af3a7991d0e1ccef0b5d8a78459d417b19b8c490e3abf6fdfb8cf1ee1c015514d9c09eebb82d3119cbcf527"; // SHA-512 von "TobiasCV"
             const userPassword = prompt("Bitte geben Sie das Passwort ein:");
 
-            if (userPassword !== null && hashPassword(userPassword) === correctHashedPassword) {
+            if (userPassword !== null && (await hashPassword(userPassword)) === correctHashedPassword) {
                 document.body.style.display = "block";
                 console.log("Passwort korrekt, Inhalt wird angezeigt.");
             } else {
