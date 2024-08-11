@@ -15,7 +15,7 @@
         .container {
             position: relative;
             width: 100%;
-            height: 100vh;
+            height: calc(100vh - 60px); /* Platz für den Footer */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -55,17 +55,34 @@
             top: 20px;
             left: 20px;
             z-index: 1001;
-            display: flex;
-            align-items: center;
+            cursor: pointer;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 40px;
+            left: 0;
+            background: #fff;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1002;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .dropdown-content select {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            font-size: 1em;
+            background: #fff;
+            cursor: pointer;
+        }
+        .dropdown-content select:focus {
+            outline: none;
         }
         .dropdown-menu img {
             width: 25px;
             height: 25px;
-            margin-right: 10px;
-        }
-        .dropdown-menu select {
-            padding: 5px 10px;
-            font-size: 1em;
         }
         h1 {
             margin: 0;
@@ -84,8 +101,15 @@
             border-radius: 5px;
         }
         footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #fff;
             text-align: center;
-            margin-top: 30px;
+            padding: 10px;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
             font-size: 0.8em;
             color: #777;
         }
@@ -96,17 +120,38 @@
             section {
                 width: 100%;
             }
-            .fixed-header {
-                font-size: 0.8em;
+            .fixed-header h1 {
+                font-size: 1.2em;
             }
-            .dropdown-menu select {
+            .dropdown-content select {
                 font-size: 0.9em;
+            }
+            .fixed-header h1 {
+                display: block;
+            }
+            .fixed-header h1 br {
+                display: none;
+            }
+            .fixed-header h1 span {
+                display: inline;
+            }
+        }
+        @media screen and (max-width: 480px) {
+            .fixed-header h1 {
+                font-size: 1.2em;
+            }
+            .fixed-header h1 br {
+                display: inline;
+            }
+            .fixed-header h1 span {
+                display: block;
             }
         }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             checkPassword();
+            setupDropdownMenu();
         });
 
         async function hashPassword(password) {
@@ -128,6 +173,21 @@
                 alert("Falsches Passwort.");
                 window.location.reload(); // Lässt die Seite neu laden, um eine erneute Abfrage zu erzwingen
             }
+        }
+
+        function setupDropdownMenu() {
+            const dropdownMenu = document.querySelector('.dropdown-menu');
+            const dropdownContent = document.querySelector('.dropdown-content');
+
+            dropdownMenu.addEventListener('click', function() {
+                dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+            });
+
+            document.addEventListener('click', function(event) {
+                if (!dropdownMenu.contains(event.target)) {
+                    dropdownContent.style.display = 'none';
+                }
+            });
         }
 
         function initSections() {
@@ -198,32 +258,35 @@
             });
 
             // Scrollen über das Drop-Down-Menü
-            const dropdown = document.querySelector('.dropdown-menu select');
+            const dropdown = document.querySelector('.dropdown-content select');
             dropdown.addEventListener('change', function() {
                 sections[currentIndex].classList.remove('active');
-                currentIndex = parseInt(this.value, 10);
+                currentIndex = parseInt(this.value);
                 sections[currentIndex].classList.add('active');
             });
         }
     </script>
 </head>
-<body style="overflow: hidden;">
+<body>
     <div class="fixed-header">
-        <h1>Tobias Daniel Goncalves Marques</h1>
+        <h1>
+            Tobias Daniel<br><span>Goncalves Marques</span>
+        </h1>
+        <div class="dropdown-menu">
+            <img src="https://img.icons8.com/ios-filled/50/000000/menu.png" alt="Dropdown Menü">
+            <div class="dropdown-content">
+                <select>
+                    <option value="0">Ausbildung</option>
+                    <option value="1">Fähigkeiten</option>
+                    <option value="2">Projekte</option>
+                    <option value="3">Erfahrungen</option>
+                    <option value="4">Soziales</option>
+                </select>
+            </div>
+        </div>
     </div>
 
-    <div class="dropdown-menu">
-        <img src="https://img.icons8.com/ios-filled/50/000000/menu.png" alt="Menü Icon">
-        <select>
-            <option value="0">Ausbildung</option>
-            <option value="1">Fähigkeiten</option>
-            <option value="2">Projekte</option>
-            <option value="3">Erfahrungen</option>
-            <option value="4">Soziales</option>
-        </select>
-    </div>
-
-    <div class="container" style="display: none;">
+    <div class="container">
         <section>
             <h2>Ausbildung</h2>
             <ul>
@@ -265,7 +328,7 @@
         </section>
     </div>
 
-    <footer style="display: none;">
+    <footer>
         <p>&copy; 2024 Tobias Marques. Alle Rechte vorbehalten.</p>
     </footer>
 </body>
