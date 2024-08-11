@@ -20,6 +20,8 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            padding: 0 20px;
+            box-sizing: border-box;
         }
         section {
             display: none;
@@ -29,7 +31,7 @@
             background: #fff;
             border-radius: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
+            text-align: left; /* Text linksbündig */
             transition: opacity 1s ease-in-out;
         }
         section.active {
@@ -53,6 +55,13 @@
             top: 20px;
             left: 20px;
             z-index: 1001;
+            display: flex;
+            align-items: center;
+        }
+        .dropdown-menu img {
+            width: 25px;
+            height: 25px;
+            margin-right: 10px;
         }
         .dropdown-menu select {
             padding: 5px 10px;
@@ -79,6 +88,20 @@
             margin-top: 30px;
             font-size: 0.8em;
             color: #777;
+        }
+        @media screen and (max-width: 768px) {
+            .container {
+                width: 100%;
+            }
+            section {
+                width: 100%;
+            }
+            .fixed-header {
+                font-size: 0.8em;
+            }
+            .dropdown-menu select {
+                font-size: 0.9em;
+            }
         }
     </style>
     <script>
@@ -118,14 +141,14 @@
             function handleScroll(event) {
                 if (isScrolling) return;
 
-                if (event.deltaY > 0) {
+                if (event.deltaY > 0 || event.key === "ArrowDown") {
                     // Scrollen nach unten
                     if (currentIndex < sections.length - 1) {
                         sections[currentIndex].classList.remove('active');
                         currentIndex++;
                         sections[currentIndex].classList.add('active');
                     }
-                } else {
+                } else if (event.deltaY < 0 || event.key === "ArrowUp") {
                     // Scrollen nach oben
                     if (currentIndex > 0) {
                         sections[currentIndex].classList.remove('active');
@@ -138,8 +161,41 @@
                 setTimeout(() => isScrolling = false, 1000); // Verzögerung von 1 Sekunde zwischen Scrolls
             }
 
-            // Scrollen mit dem Mausrad
+            // Scrollen mit dem Mausrad oder den Pfeiltasten
             window.addEventListener('wheel', handleScroll);
+            window.addEventListener('keydown', handleScroll);
+
+            // Touch-Unterstützung für mobile Geräte
+            let touchStartY = 0;
+            let touchEndY = 0;
+
+            window.addEventListener('touchstart', function(event) {
+                touchStartY = event.changedTouches[0].screenY;
+            });
+
+            window.addEventListener('touchend', function(event) {
+                touchEndY = event.changedTouches[0].screenY;
+                if (isScrolling) return;
+
+                if (touchStartY > touchEndY + 50) {
+                    // Nach unten wischen
+                    if (currentIndex < sections.length - 1) {
+                        sections[currentIndex].classList.remove('active');
+                        currentIndex++;
+                        sections[currentIndex].classList.add('active');
+                    }
+                } else if (touchStartY < touchEndY - 50) {
+                    // Nach oben wischen
+                    if (currentIndex > 0) {
+                        sections[currentIndex].classList.remove('active');
+                        currentIndex--;
+                        sections[currentIndex].classList.add('active');
+                    }
+                }
+
+                isScrolling = true;
+                setTimeout(() => isScrolling = false, 1000);
+            });
 
             // Scrollen über das Drop-Down-Menü
             const dropdown = document.querySelector('.dropdown-menu select');
@@ -157,6 +213,7 @@
     </div>
 
     <div class="dropdown-menu">
+        <img src="https://img.icons8.com/ios-filled/50/000000/menu.png" alt="Menü Icon">
         <select>
             <option value="0">Ausbildung</option>
             <option value="1">Fähigkeiten</option>
