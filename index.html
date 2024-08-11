@@ -60,7 +60,7 @@
         }
 
         async function checkPassword() {
-            const correctHashedPassword = "2c74fd17edafd80e8447b0d46741ee243b7eb74f9af3a7991d0e1ccef0b5d8a78459d417b19b8c490e3abf6fdfb8cf1ee1c015514d9c09eebb82d3119cbcf527"; // SHA-512 von "TobiasCV"
+            const correctHashedPassword = "248c0cd005cfed5c66e9d1d83c5e91911df94965a3f82ac37d724c7c412a66f2ad5826a5a7d821d7740bb0d175eaa4f5a91d730df6a95d9b3798c156694deb7d"; // SHA-512 von "TobiasCV"
             const userPassword = prompt("Bitte geben Sie das Passwort ein:");
 
             if (userPassword !== null && (await hashPassword(userPassword)) === correctHashedPassword) {
