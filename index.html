@@ -48,7 +48,23 @@
             font-size: 0.8em;
             color: #777;
         }
+        password-container {
+            text-align: center;
+            margin-top: 20%;
+        }
     </style>
+    <script>
+        function checkPassword() {
+            const password = prompt("Bitte geben Sie das Passwort ein:");
+            if (password === "TobiasCV") { // Passwort
+                document.body.style.display = "block"; // Zeigt den Inhalt an
+            } else {
+                alert("Falsches Passwort.");
+                checkPassword(); // Fordert das Passwort erneut an
+            }
+        }
+        window.onload = checkPassword;       
+    </script>
 </head>
 <body>
     <div class="container">
