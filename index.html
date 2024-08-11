@@ -7,45 +7,58 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            line-height: 1.6;
             margin: 0;
             padding: 0;
             background-color: #86ddec8e;
+            overflow: hidden; /* Verhindert das normale Scrollen */
         }
         .container {
-            max-width: 800px;
-            margin: 150px auto 50px auto; /* Abstand für festen Header und Symbole */
-            padding: 50px;
-            background: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 20px;
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
         }
-        header, .fixed-section {
+        section {
+            display: none; /* Verbirgt die Sektionen initial */
+            width: 100%;
+            height: 100vh;
+            padding: 50px;
+            box-sizing: border-box;
+            background: #fff;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: opacity 1s ease-in-out;
+            overflow-y: auto; /* Ermöglicht das Scrollen innerhalb einer Sektion */
+        }
+        section.active {
+            display: block;
+            opacity: 1;
+            z-index: 1;
+        }
+        .fixed-header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             background: #fff;
             z-index: 1000;
-            padding: 20px 0;
-            text-align: center;
+            padding: 20px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
-        header h1 {
+        .dropdown-menu {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1001;
+        }
+        .dropdown-menu select {
+            padding: 5px 10px;
+            font-size: 1em;
+        }
+        h1 {
             margin: 0;
-        }
-        .fixed-section {
-            margin-top: 60px;
-            padding-bottom: 10px;
-        }
-        .fixed-section img {
-            width: 25px;
-            vertical-align: middle;
-            margin-right: 15px;
-        }
-        section {
-            margin: 50px 0;
-            display: none; /* Verbirgt die Sektionen initial */
         }
         h2 {
             color: #333;
@@ -68,6 +81,10 @@
         }
     </style>
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            checkPassword();
+        });
+
         async function hashPassword(password) {
             const encoder = new TextEncoder();
             const data = encoder.encode(password);
@@ -80,48 +97,69 @@
             const userPassword = prompt("Bitte geben Sie das Passwort ein:");
 
             if (userPassword !== null && (await hashPassword(userPassword)) === correctHashedPassword) {
-                document.body.style.display = "block";
-                console.log("Passwort korrekt, Inhalt wird angezeigt.");
-                revealSections(); // Zeige die Sektionen nacheinander an
+                document.querySelector('body').style.overflow = 'visible';
+                document.querySelector('.container').style.display = 'block';
+                initSections(); // Initialisiert das Scrollen und Anzeigen der Sektionen
             } else {
                 alert("Falsches Passwort.");
                 window.location.reload(); // Lässt die Seite neu laden, um eine erneute Abfrage zu erzwingen
             }
         }
 
-        function revealSections() {
+        function initSections() {
             const sections = document.querySelectorAll('section');
-            let index = 0;
-            function showNextSection() {
-                if (index < sections.length) {
-                    sections[index].style.display = 'block';
-                    index++;
-                    setTimeout(showNextSection, 1000); // Zeitintervall zwischen den Sektionen
+            let currentIndex = 0;
+
+            // Zeigt die erste Sektion an
+            sections[currentIndex].classList.add('active');
+
+            function handleScroll(event) {
+                if (event.deltaY > 0) {
+                    // Scrollen nach unten
+                    if (currentIndex < sections.length - 1) {
+                        sections[currentIndex].classList.remove('active');
+                        currentIndex++;
+                        sections[currentIndex].classList.add('active');
+                    }
+                } else {
+                    // Scrollen nach oben
+                    if (currentIndex > 0) {
+                        sections[currentIndex].classList.remove('active');
+                        currentIndex--;
+                        sections[currentIndex].classList.add('active');
+                    }
                 }
             }
-            showNextSection();
-        }
 
-        document.addEventListener("DOMContentLoaded", function() {
-            checkPassword();
-        });
+            // Scrollen mit dem Mausrad
+            window.addEventListener('wheel', handleScroll);
+
+            // Scrollen über das Drop-Down-Menü
+            const dropdown = document.querySelector('.dropdown-menu select');
+            dropdown.addEventListener('change', function() {
+                sections[currentIndex].classList.remove('active');
+                currentIndex = parseInt(this.value, 10);
+                sections[currentIndex].classList.add('active');
+            });
+        }
     </script>
 </head>
-<body>
-    <div class="container">
-        <header>
-            <h1>Tobias Daniel Goncalves Marques</h1>
-        </header>
+<body style="overflow: hidden;">
+    <div class="fixed-header">
+        <h1>Tobias Daniel Goncalves Marques</h1>
+    </div>
 
-        <div class="fixed-section">
-            <a href="mailto:info@it-marques.de" style="text-decoration: none;">
-                <img src="https://img.icons8.com/ios-filled/50/000000/email.png" alt="E-Mail Icon">
-            </a>
-            <a href="https://github.com/t2794" target="_blank" style="text-decoration: none;">
-                <img src="https://img.icons8.com/ios-filled/50/000000/github.png" alt="GitHub Icon">
-            </a>
-        </div>
-        
+    <div class="dropdown-menu">
+        <select>
+            <option value="0">Ausbildung</option>
+            <option value="1">Fähigkeiten</option>
+            <option value="2">Projekte</option>
+            <option value="3">Erfahrungen</option>
+            <option value="4">Soziales</option>
+        </select>
+    </div>
+
+    <div class="container" style="display: none;">
         <section>
             <h2>Ausbildung</h2>
             <ul>
@@ -129,8 +167,6 @@
                 <li><strong>Bachelor Elektrotechnik und Informationstechnologie</strong><br>Technische Universität Dortmund, 2022 - 2023</li>                
             </ul>
         </section>
-
-        <hr>
 
         <section>
             <h2>Fähigkeiten</h2>
@@ -142,8 +178,6 @@
             </ul>
         </section>
 
-        <hr>
-
         <section>
             <h2>Projekte</h2>
             <ul>
@@ -152,8 +186,6 @@
             </ul>
         </section>
 
-        <hr>
-
         <section>
             <h2>Erfahrungen</h2>
             <ul>
@@ -161,18 +193,16 @@
             </ul>
         </section>
 
-        <hr>
-
         <section>
             <h2>Soziales: Rotaract</h2>
             <ul>
                 <li><strong>Rotaract</strong> Beschreibung der Tätigkeit.</li>
             </ul>
         </section>
-
-        <footer>
-            <p>&copy; 2024 Tobias Marques. Alle Rechte vorbehalten.</p>
-        </footer>
     </div>
+
+    <footer style="display: none;">
+        <p>&copy; 2024 Tobias Marques. Alle Rechte vorbehalten.</p>
+    </footer>
 </body>
 </html>
