@@ -50,30 +50,28 @@
             font-size: 0.8em;
             color: #777;
         }
-        .password-container {
-            text-align: center;
-            margin-top: 20%;
-        }
     </style>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' https://img.icons8.com; frame-ancestors 'none'; base-uri 'self';">
     <script>
         function hashPassword(password) {
             return btoa(password); // Base64-Hash als einfache Demonstration
         }
 
         function checkPassword() {
-            const hashedPassword = "VG9iaWFzQ1Y="; // Base64 von "TobiasCV"
+            const correctHashedPassword = "VG9iaWFzQ1Y="; // Base64 von "TobiasCV"
             const userPassword = prompt("Bitte geben Sie das Passwort ein:");
-            if (hashPassword(userPassword) === hashedPassword) {
+
+            if (userPassword !== null && hashPassword(userPassword) === correctHashedPassword) {
                 document.body.style.display = "block";
                 console.log("Passwort korrekt, Inhalt wird angezeigt.");
             } else {
                 alert("Falsches Passwort.");
-                console.log("Falsches Passwort eingegeben.");
-                checkPassword(); // Fordert das Passwort erneut an
+                window.location.reload(); // Lässt die Seite neu laden, um eine erneute Abfrage zu erzwingen
             }
         }
-        window.onload = checkPassword;
+
+        document.addEventListener("DOMContentLoaded", function() {
+            checkPassword();
+        });
     </script>
 </head>
 <body>
