@@ -11,25 +11,41 @@
             margin: 0;
             padding: 0;
             background-color: #86ddec8e;
-            display: none; /* Verbirgt den Inhalt initial */
         }
         .container {
             max-width: 800px;
-            margin: 50px auto;
+            margin: 150px auto 50px auto; /* Abstand für festen Header und Symbole */
             padding: 50px;
             background: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 20px;
         }
-        header {
-            text-align: center;
+        header, .fixed-section {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #fff;
+            z-index: 1000;
             padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         header h1 {
             margin: 0;
         }
+        .fixed-section {
+            margin-top: 60px;
+            padding-bottom: 10px;
+        }
+        .fixed-section img {
+            width: 25px;
+            vertical-align: middle;
+            margin-right: 15px;
+        }
         section {
-            margin: 20px 0;
+            margin: 50px 0;
+            display: none; /* Verbirgt die Sektionen initial */
         }
         h2 {
             color: #333;
@@ -66,10 +82,24 @@
             if (userPassword !== null && (await hashPassword(userPassword)) === correctHashedPassword) {
                 document.body.style.display = "block";
                 console.log("Passwort korrekt, Inhalt wird angezeigt.");
+                revealSections(); // Zeige die Sektionen nacheinander an
             } else {
                 alert("Falsches Passwort.");
                 window.location.reload(); // Lässt die Seite neu laden, um eine erneute Abfrage zu erzwingen
             }
+        }
+
+        function revealSections() {
+            const sections = document.querySelectorAll('section');
+            let index = 0;
+            function showNextSection() {
+                if (index < sections.length) {
+                    sections[index].style.display = 'block';
+                    index++;
+                    setTimeout(showNextSection, 1000); // Zeitintervall zwischen den Sektionen
+                }
+            }
+            showNextSection();
         }
 
         document.addEventListener("DOMContentLoaded", function() {
@@ -83,19 +113,15 @@
             <h1>Tobias Daniel Goncalves Marques</h1>
         </header>
 
-        <section>
-            <p>
-                <a href="mailto:info@it-marques.de" style="text-decoration: none;">
-                    <img src="https://img.icons8.com/ios-filled/50/000000/email.png" alt="E-Mail Icon" style="width: 25px; vertical-align: middle; margin-right: 15px;">
-                </a>
-                <a href="https://github.com/t2794" target="_blank" style="text-decoration: none;">
-                    <img src="https://img.icons8.com/ios-filled/50/000000/github.png" alt="GitHub Icon" style="width: 25px; vertical-align: middle;">
-                </a>
-            </p>
-        </section>
+        <div class="fixed-section">
+            <a href="mailto:info@it-marques.de" style="text-decoration: none;">
+                <img src="https://img.icons8.com/ios-filled/50/000000/email.png" alt="E-Mail Icon">
+            </a>
+            <a href="https://github.com/t2794" target="_blank" style="text-decoration: none;">
+                <img src="https://img.icons8.com/ios-filled/50/000000/github.png" alt="GitHub Icon">
+            </a>
+        </div>
         
-        <hr>
-
         <section>
             <h2>Ausbildung</h2>
             <ul>
