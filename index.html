@@ -97,11 +97,11 @@
         .progress-index {
             position: fixed;
             top: 50%; /* Positioniert den Progress-Index mittig in der Höhe */
-            right: 20px;
+            right: 10px; /* Etwas näher an der rechten Kante */
             transform: translateY(-50%);
             z-index: 1000;
-            width: 5px;
-            height: 50%; /* Höhe des Progress-Index */
+            width: 8px; /* Breiterer Balken für bessere Sichtbarkeit */
+            height: 60%; /* Höhe des Progress-Index */
             background: rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             overflow: hidden;
@@ -131,34 +131,17 @@
             .fixed-header h1 {
                 font-size: 1.2em;
             }
-            .fixed-header h1 {
-                display: block;
-            }
-            .fixed-header h1 br {
-                display: none;
-            }
-            .fixed-header h1 span {
-                display: inline;
-            }
             .progress-index {
-                top: 10%; /* Versetzt den Progress-Index nach oben, um Überlappungen zu vermeiden */
-                right: 10px;
-                height: 80%; /* Höhe des Progress-Index auf 80% verringern */
+                right: 5px; /* Weiter an den Rand geschoben */
+                top: 20%; /* Höher positioniert, um Überlappungen zu vermeiden */
+                height: 60%; /* Angepasste Höhe */
             }
         }
         @media screen and (max-width: 480px) {
-            .fixed-header h1 {
-                font-size: 1.2em;
-            }
-            .fixed-header h1 br {
-                display: inline;
-            }
-            .fixed-header h1 span {
-                display: block;
-            }
             .progress-index {
-                right: 5px;
-                height: 70%; /* Weiter verringerte Höhe für kleine Bildschirme */
+                right: 2px; /* Weiter an den Rand für sehr kleine Bildschirme */
+                top: 15%; /* Weiter nach oben verschoben */
+                height: 50%; /* Noch kompakter für kleine Bildschirme */
             }
         }
     </style>
