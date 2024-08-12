@@ -11,6 +11,11 @@
             padding: 0;
             background-color: #86ddec8e;
             overflow: hidden;
+            transition: background-color 0.5s ease; /* Animation für Hintergrundfarbe */
+        }
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
         }
         .container {
             position: relative;
@@ -32,11 +37,14 @@
             border-radius: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: left; /* Text linksbündig */
-            transition: opacity 0.5s ease-in-out;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+            transform: translateY(20px); /* Ausgangsposition für Animation */
         }
         section.active {
             display: block;
             opacity: 1;
+            transform: translateY(0); /* Zurück zur Standardposition */
             z-index: 1;
         }
         .fixed-header {
@@ -46,12 +54,16 @@
             width: 100%;
             background: #fff;
             z-index: 1000;
-            padding: 0; /* Padding auf 0 setzen, um sicherzustellen, dass der Text mittig ist */
+            padding: 0;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             display: flex;
-            justify-content: center; /* Horizontales Zentrieren */
-            align-items: center; /* Vertikales Zentrieren */
-            height: 60px; /* Feste Höhe des Headers */
+            justify-content: center;
+            align-items: center;
+            height: 60px;
+            transition: background-color 0.5s ease; /* Animation für Header-Hintergrundfarbe */
+        }
+        body.dark-mode .fixed-header {
+            background: #1f1f1f;
         }
         h1 {
             margin: 0;
@@ -62,12 +74,16 @@
             margin: 0;
             display: flex;
             align-items: center;
+            transition: color 0.5s ease; /* Animation für Textfarbe */
+        }
+        body.dark-mode h2 {
+            color: #e0e0e0;
         }
         .section-icons {
             display: flex;
             align-items: center;
-            gap: 15px; /* Abstand zwischen den Icons */
-            margin-left: 15px; /* Abstand zwischen Überschrift und Icons */
+            gap: 15px;
+            margin-left: 15px;
         }
         ul {
             list-style-type: none;
@@ -78,6 +94,10 @@
             margin: 5px 0;
             padding: 10px;
             border-radius: 5px;
+            transition: background-color 0.5s ease; /* Animation für Hintergrundfarbe */
+        }
+        body.dark-mode ul li {
+            background: #333;
         }
         footer {
             position: fixed;
@@ -86,24 +106,34 @@
             width: 100%;
             background: #fff;
             text-align: center;
-            padding: 5px; /* Verkleinert den Footer */
+            padding: 5px;
             box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
             z-index: 1000;
-            font-size: 0.7em; /* Verkleinert die Schriftgröße im Footer */
+            font-size: 0.7em;
             color: #777;
+            transition: background-color 0.5s ease, color 0.5s ease; /* Animation für Hintergrundfarbe und Textfarbe */
+        }
+        body.dark-mode footer {
+            background: #1f1f1f;
+            color: #ccc;
         }
         .contact-link {
-            color: #777; /* Standardfarbe für Kontakt */
+            color: #777;
             text-decoration: none;
             transition: color 0.3s ease;
         }
-
+        body.dark-mode .contact-link {
+            color: #ccc;
+        }
         .contact-link:hover {
-            color: #007BFF; /* Hover-Farbe für Kontakt */
+            color: #007BFF;
+        }
+        body.dark-mode .contact-link:hover {
+            color: #66aaff;
         }
         .scroll-indicator {
             position: fixed;
-            bottom: 70px; /* Adjusted to sit above the footer */
+            bottom: 70px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
@@ -114,19 +144,18 @@
             width: 40px;
             height: 40px;
             animation: bounce 2s infinite;
-            color: #fff;
         }
         .scroll-indicator:hover {
-            transform: translateX(-50%) scale(1.2); /* Vergrößert den Scroll-Indicator beim Hover */
+            transform: translateX(-50%) scale(1.2);
         }
         .progress-index {
             position: fixed;
             top: 50%;
-            right: 10px; /* Abstand zur rechten Seite */
+            right: 10px;
             transform: translateY(-50%);
             z-index: 1000;
             width: 8px;
-            height: 60%; /* Größe des Progress-Index */
+            height: 60%;
             background: rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             overflow: hidden;
@@ -134,27 +163,24 @@
         .progress-bar {
             width: 100%;
             height: 0;
-            background: #ffffff; /* Ändert den Fortschrittsbalken auf Weiß */
+            background: #ffffff;
             border-radius: 10px;
             transition: height 0.3s ease-in-out;
         }
         .social-icons {
             display: flex;
-            justify-content: center; /* Zentriert die Icons horizontal */
-            gap: 15px; /* Abstand zwischen den Icons */
-            margin-bottom: 15px; /* Abstand unter den Icons */
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
         }
-
         .icon-link img {
             width: 24px;
             height: 24px;
             transition: transform 0.3s ease;
         }
-
         .icon-link:hover img {
-            transform: scale(1.2); /* Vergrößert die Icons beim Hover */
+            transform: scale(1.2);
         }
-
         @keyframes bounce {
             0%, 100% {
                 transform: translateY(0);
@@ -174,36 +200,35 @@
                 font-size: 1.2em;
             }
             .progress-index {
-                right: 5px; /* Weiter an den Rand geschoben */
+                right: 5px;
                 top: 50%;
                 transform: translateY(-50%);
-                height: 50%; /* Angepasste Höhe */
+                height: 50%;
             }
             .about-content {
                 flex-direction: column;
                 align-items: center;
             }
-
             .about-text {
-                width: 100%; /* Vollbreite bei kleineren Bildschirmen */
+                width: 100%;
             }
-
             .about-photo img {
-                width: 120px; /* Kleinere Fotos für Mobilgeräte */
+                width: 120px;
             }
         }
         @media screen and (max-width: 480px) {
             .progress-index {
-                right: 2px; /* Weiter an den Rand für sehr kleine Bildschirme */
-                top: 50%; /* Weiter nach oben verschoben */
+                right: 2px;
+                top: 50%;
                 transform: translateY(-50%);
-                height: 50%; /* Noch kompakter für kleine Bildschirme */
+                height: 50%;
             }
         }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             checkPassword();
+            setupDarkModeToggle(); // Dark Mode Toggle initialisieren
         });
 
         async function hashPassword(password) {
@@ -232,131 +257,90 @@
             const scrollIndicator = document.querySelector('.scroll-indicator');
             const progressBar = document.querySelector('.progress-bar');
             let currentIndex = 0;
-            let isScrolling = false;
 
-            // Zeigt die erste Sektion an
-            sections[currentIndex].classList.add('active');
-
-            function changeSection(nextIndex) {
-                if (nextIndex < 0 || nextIndex >= sections.length) return;
-
-                sections[currentIndex].classList.remove('active');
-                currentIndex = nextIndex;
-                sections[currentIndex].classList.add('active');
-
-                // Scroll-Indikator ausblenden, wenn letzte Seite erreicht ist
-                if (currentIndex === sections.length - 1) {
-                    scrollIndicator.style.display = 'none';
-                } else {
-                    scrollIndicator.style.display = 'block';
-                }
-
-                // Fortschrittsbalken aktualisieren
-                const progress = (currentIndex + 1) / sections.length;
-                progressBar.style.height = `${progress * 100}%`;
+            function updateSections(index) {
+                sections.forEach((section, i) => {
+                    section.classList.toggle('active', i === index);
+                });
             }
 
-            function handleScroll(event) {
-                if (isScrolling) return;
-
-                if (event.deltaY > 0 || event.key === "ArrowDown") {
-                    changeSection(currentIndex + 1);
-                } else if (event.deltaY < 0 || event.key === "ArrowUp") {
-                    changeSection(currentIndex - 1);
-                }
-
-                isScrolling = true;
-                setTimeout(() => isScrolling = false, 500);
+            function updateProgressBar() {
+                progressBar.style.height = `${((currentIndex + 1) / sections.length) * 100}%`;
             }
 
-            // Scroll-Event und Pfeiltasten
-            window.addEventListener('wheel', handleScroll);
-            window.addEventListener('keydown', handleScroll);
-
-            // Touch-Event für mobile Geräte
-            let touchStartY = 0;
-            let touchEndY = 0;
-
-            window.addEventListener('touchstart', event => {
-                touchStartY = event.touches[0].screenY;
+            scrollIndicator.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % sections.length;
+                updateSections(currentIndex);
+                updateProgressBar();
             });
 
-            window.addEventListener('touchend', event => {
-                touchEndY = event.changedTouches[0].screenY;
-                if (touchStartY > touchEndY + 50) {
-                    changeSection(currentIndex + 1);
-                } else if (touchStartY < touchEndY - 50) {
-                    changeSection(currentIndex - 1);
-                }
-            });
+            updateSections(currentIndex);
+            updateProgressBar();
+        }
 
-            // Scroll-Indicator Click Event
-            scrollIndicator.addEventListener('click', () => changeSection(currentIndex + 1));
+        function setupDarkModeToggle() {
+            const darkModeToggle = document.createElement('button');
+            darkModeToggle.textContent = "Dark Mode";
+            darkModeToggle.style.position = "fixed";
+            darkModeToggle.style.top = "15px";
+            darkModeToggle.style.right = "15px";
+            darkModeToggle.style.zIndex = "1001";
+            darkModeToggle.style.padding = "10px 15px";
+            darkModeToggle.style.border = "none";
+            darkModeToggle.style.borderRadius = "5px";
+            darkModeToggle.style.cursor = "pointer";
+
+            document.body.appendChild(darkModeToggle);
+
+            // Dark Mode Zustand aus localStorage abrufen
+            const isDarkMode = localStorage.getItem("dark-mode") === "true";
+            document.body.classList.toggle("dark-mode", isDarkMode);
+
+            darkModeToggle.addEventListener("click", () => {
+                document.body.classList.toggle("dark-mode");
+                localStorage.setItem("dark-mode", document.body.classList.contains("dark-mode"));
+            });
         }
     </script>
 </head>
 <body>
     <header class="fixed-header">
-        <h1>Tobias Daniel Goncalves Marques</h1> <!-- Zentrierter Name im Header -->
+        <h1>Tobias Marques</h1>
     </header>
 
-    <div class="container">
-        <section>
+    <div class="container" style="display: none;">
+        <section id="about">
             <h2>Über mich</h2>
-            <div class="section-icons">
-                <a href="mailto:deine-email@example.com" class="icon-link" target="_blank">
-                    <img src="https://img.icons8.com/ios-filled/50/777777/new-post.png" alt="Email">
-                </a>
-                <a href="https://github.com/dein-github" class="icon-link" target="_blank">
-                    <img src="https://img.icons8.com/ios-filled/50/777777/github.png" alt="GitHub">
-                </a>
-            </div>
-            <p>Kurze Beschreibung über mich.</p>
-        </section>
-
-        <section>
-            <h2>Ausbildung</h2>
+            <p>Hallo, ich bin Tobias Marques, ein leidenschaftlicher Webentwickler.</p>
             <ul>
-                <li><strong>Bachelor Informatik</strong><br>Technische Universität Dortmund, 2023 - Gegenwart</li>
-                <li><strong>Bachelor Elektrotechnik und Informationstechnologie</strong><br>Technische Universität Dortmund, 2022 - 2023</li>                
+                <li>HTML, CSS, JavaScript</li>
+                <li>React, Node.js</li>
+                <li>Python, Django</li>
             </ul>
         </section>
 
-        <section>
-            <h2>Fähigkeiten</h2>
-            <ul>
-                <li>Programmiersprachen: Python, Java, C++</li>
-                <li>Webentwicklung: HTML, CSS, JavaScript</li>
-                <li>Data Science: SQL</li>
-                <li>Version Control: Git, GitHub</li>
-            </ul>
-        </section>
-
-        <section>
+        <section id="projects">
             <h2>Projekte</h2>
+            <p>Hier sind einige meiner Projekte:</p>
             <ul>
-                <li><strong>Projekt X:</strong> Beschreibung des Projekts, Technologien, die verwendet wurden.</li>
-                <li><strong>Projekt Y:</strong> Beschreibung des Projekts, Technologien, die verwendet wurden.</li>
+                <li>Projekt A</li>
+                <li>Projekt B</li>
+                <li>Projekt C</li>
             </ul>
         </section>
 
-        <section>
-            <h2>Erfahrungen</h2>
+        <section id="contact">
+            <h2>Kontakt</h2>
+            <p>Du kannst mich über folgende Kanäle erreichen:</p>
             <ul>
-                <li><strong>OGAM</strong> Beschreibung der Tätigkeit.</li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>Soziales: Rotaract</h2>
-            <ul>
-                <li><strong>Rotaract</strong> Beschreibung der Tätigkeit.</li>
+                <li>Email: tobias@example.com</li>
+                <li>LinkedIn: /tobiasmarques</li>
             </ul>
         </section>
     </div>
 
     <div class="scroll-indicator">
-        <img src="https://img.icons8.com/ios-filled/50/ffffff/down-squared.png" alt="Scrollen Sie nach unten">
+        <img src="scroll-icon.png" alt="Scroll Down">
     </div>
 
     <div class="progress-index">
@@ -364,7 +348,7 @@
     </div>
 
     <footer>
-        <p>&copy; 2024 Tobias Marques. Alle Rechte vorbehalten | <a href="mailto:deine-email@example.com" class="contact-link">Kontakt</a></p>
-    </footer>    
+        <p>© 2024 Tobias Marques - <a href="mailto:tobias@example.com" class="contact-link">Kontaktieren Sie mich</a></p>
+    </footer>
 </body>
 </html>
