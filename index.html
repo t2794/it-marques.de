@@ -6,161 +6,109 @@
     <title>Tobias Marques</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
             background-color: #86ddec8e;
-            overflow: hidden;
             color: #333;
-            transition: background-color 0.3s, color 0.3s;
+            transition: background-color 0.5s ease, color 0.5s ease;
+            overflow: hidden;
+        }
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 60px;
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.5s ease, box-shadow 0.5s ease;
+        }
+        body.dark-mode nav {
+            background-color: #1f1f1f;
+        }
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+        }
+        nav ul li {
+            display: inline;
+        }
+        nav ul li a {
+            text-decoration: none;
+            font-size: 1em;
+            color: #333;
+            padding: 10px 15px;
+            transition: color 0.3s ease, background-color 0.3s ease;
+        }
+        body.dark-mode nav ul li a {
+            color: #e0e0e0;
+        }
+        nav ul li a:hover,
+        nav ul li a.active {
+            color: #007BFF;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+        body.dark-mode nav ul li a:hover,
+        body.dark-mode nav ul li a.active {
+            color: #66aaff;
+            background-color: #333333;
         }
         .container {
             position: relative;
             width: 100%;
-            height: calc(100vh - 60px); /* Platz für den Footer */
+            height: calc(100vh - 60px);
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
             padding: 0 20px;
             box-sizing: border-box;
         }
         section {
             display: none;
             width: 80%;
-            padding: 20px;
-            box-sizing: border-box;
-            background: #fff;
-            border-radius: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: left; /* Text linksbündig */
-            transition: opacity 0.5s ease-in-out;
+            max-width: 1000px;
+            padding: 40px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
         }
         section.active {
             display: block;
             opacity: 1;
-            z-index: 1;
+            transform: translateY(0);
         }
-        .fixed-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: #fff;
-            z-index: 1000;
-            padding: 0; /* Padding auf 0 setzen, um sicherzustellen, dass der Text mittig ist */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: center; /* Horizontales Zentrieren */
-            align-items: center; /* Vertikales Zentrieren */
-            height: 60px; /* Feste Höhe des Headers */
-            transition: background-color 0.3s, color 0.3s;
-        }
-        h1 {
-            margin: 0;
-            text-align: center; /* Zentriert den Namen im Header */
-        }
-        h2 {
-            color: #333;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            transition: color 0.3s;
-        }
-        .section-icons {
-            display: flex;
-            align-items: center;
-            gap: 15px; /* Abstand zwischen den Icons */
-            margin-left: 15px; /* Abstand zwischen Überschrift und Icons */
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        ul li {
-            background: #e4e4e4;
-            margin: 5px 0;
-            padding: 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: #fff;
-            text-align: center;
-            padding: 5px; /* Verkleinert den Footer */
-            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            font-size: 0.7em; /* Verkleinert die Schriftgröße im Footer */
-            color: #777;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .contact-link {
-            color: #777; /* Standardfarbe für Kontakt */
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        .contact-link:hover {
-            color: #007BFF; /* Hover-Farbe für Kontakt */
+        body.dark-mode section {
+            background-color: #1f1f1f;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
         }
         .scroll-indicator {
             position: fixed;
-            bottom: 70px; /* Adjusted to sit above the footer */
+            bottom: 50px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
             cursor: pointer;
-            transition: transform 0.3s ease;
+            animation: bounce 2s infinite;
         }
         .scroll-indicator img {
             width: 40px;
             height: 40px;
-            animation: bounce 2s infinite;
-            color: #fff;
         }
-        .scroll-indicator:hover {
-            transform: translateX(-50%) scale(1.2); /* Vergrößert den Scroll-Indicator beim Hover */
-        }
-        .progress-index {
-            position: fixed;
-            top: 50%;
-            right: 10px; /* Abstand zur rechten Seite */
-            transform: translateY(-50%);
-            z-index: 1000;
-            width: 8px;
-            height: 60%; /* Größe des Progress-Index */
-            background: rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
-            transition: background-color 0.3s;
-        }
-        .progress-bar {
-            width: 100%;
-            height: 0;
-            background: #ffffff; /* Ändert den Fortschrittsbalken auf Weiß */
-            border-radius: 10px;
-            transition: height 0.3s ease-in-out, background-color 0.3s;
-        }
-        .social-icons {
-            display: flex;
-            justify-content: center; /* Zentriert die Icons horizontal */
-            gap: 15px; /* Abstand zwischen den Icons */
-            margin-bottom: 15px; /* Abstand unter den Icons */
-        }
-
-        .icon-link img {
-            width: 24px;
-            height: 24px;
-            transition: transform 0.3s ease;
-        }
-
-        .icon-link:hover img {
-            transform: scale(1.2); /* Vergrößert die Icons beim Hover */
-        }
-
         @keyframes bounce {
             0%, 100% {
                 transform: translateY(0);
@@ -169,187 +117,214 @@
                 transform: translateY(-10px);
             }
         }
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+            font-size: 0.8em;
+            color: #777;
+            z-index: 1000;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+        body.dark-mode footer {
+            background-color: #1f1f1f;
+            color: #ccc;
+        }
+        .progress-index {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            z-index: 1000;
+            width: 8px;
+            height: 60%;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 0;
+            background: #007BFF;
+            border-radius: 10px;
+            transition: height 0.3s ease-in-out;
+        }
+        body.dark-mode .progress-bar {
+            background: #66aaff;
+        }
         @media screen and (max-width: 768px) {
-            .container {
-                width: 100%;
-            }
             section {
                 width: 100%;
-            }
-            .fixed-header h1 {
-                font-size: 1.2em;
+                padding: 20px;
             }
             .progress-index {
-                right: 5px; /* Weiter an den Rand geschoben */
-                top: 50%;
-                transform: translateY(-50%);
-                height: 50%; /* Angepasste Höhe */
-            }
-            .about-content {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .about-text {
-                width: 100%; /* Vollbreite bei kleineren Bildschirmen */
-            }
-
-            .about-photo img {
-                width: 120px; /* Kleinere Fotos für Mobilgeräte */
+                right: 10px;
             }
         }
         @media screen and (max-width: 480px) {
             .progress-index {
-                right: 2px; /* Weiter an den Rand für sehr kleine Bildschirme */
-                top: 50%; /* Weiter nach oben verschoben */
-                transform: translateY(-50%);
-                height: 50%; /* Noch kompakter für kleine Bildschirme */
+                right: 5px;
             }
-        }
-
-        /* Dark Mode Styles */
-        body.dark-mode {
-            background-color: #2e2e2e;
-            color: #ccc;
-        }
-        .dark-mode .fixed-header {
-            background-color: #1a1a1a;
-            color: #ccc;
-        }
-        .dark-mode section {
-            background-color: #3a3a3a;
-            color: #ccc;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-        .dark-mode ul li {
-            background-color: #4a4a4a;
-            color: #ccc;
-        }
-        .dark-mode footer {
-            background-color: #1a1a1a;
-            color: #ccc;
-        }
-        .dark-mode .contact-link {
-            color: #ccc;
-        }
-        .dark-mode .contact-link:hover {
-            color: #1e90ff;
-        }
-        .dark-mode .progress-index {
-            background: rgba(255, 255, 255, 0.1);
-        }
-        .dark-mode .progress-bar {
-            background-color: #ccc;
-        }
-        .dark-mode .scroll-indicator img {
-            filter: invert(1);
         }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Dark Mode Initialization
-            const darkModeToggle = document.getElementById('dark-mode-toggle');
-            const currentMode = localStorage.getItem('darkMode') || 'light';
-            if (currentMode === 'dark') {
-                document.body.classList.add('dark-mode');
-            }
-
-            darkModeToggle.addEventListener('click', function() {
-                document.body.classList.toggle('dark-mode');
-                const mode = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
-                localStorage.setItem('darkMode', mode);
-            });
-
-            // Section Switching
-            const sections = document.querySelectorAll('section');
-            let currentSectionIndex = 0;
-
-            function showSection(index) {
-                sections[currentSectionIndex].classList.remove('active');
-                sections[index].classList.add('active');
-                currentSectionIndex = index;
-            }
-
-            showSection(0);
-
-            document.addEventListener('wheel', function(event) {
-                if (event.deltaY > 0) {
-                    showSection((currentSectionIndex + 1) % sections.length);
-                } else if (event.deltaY < 0) {
-                    showSection((currentSectionIndex - 1 + sections.length) % sections.length);
-                }
-            });
-
-            // Progress Indicator
-            window.addEventListener('scroll', function() {
-                const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
-                const scrollTop = window.scrollY;
-                const progressHeight = (scrollTop / scrollableHeight) * 100;
-                document.querySelector('.progress-bar').style.height = `${progressHeight}%`;
-            });
+            checkPassword();
+            setupDarkModeToggle();
+            initMenu(); // Menüinitialisierung
         });
+
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hash = await crypto.subtle.digest('SHA-512', data);
+            return Array.from(new Uint8Array(hash)).map(byte => byte.toString(16).padStart(2, '0')).join('');
+        }
+
+        async function checkPassword() {
+            const correctHashedPassword = "248c0cd005cfed5c66e9d1d83c5e91911df94965a3f82ac37d724c7c412a66f2ad5826a5a7d821d7740bb0d175eaa4f5a91d730df6a95d9b3798c156694deb7d";
+            const userPassword = prompt("Bitte geben Sie das Passwort ein:");
+
+            if (userPassword !== null && (await hashPassword(userPassword)) === correctHashedPassword) {
+                document.querySelector('body').style.overflow = 'visible';
+                document.querySelector('.container').style.display = 'flex';
+                initSections();
+            } else {
+                alert("Falsches Passwort.");
+                window.location.reload();
+            }
+        }
+
+        function initSections() {
+            const sections = document.querySelectorAll('section');
+            const scrollIndicator = document.querySelector('.scroll-indicator');
+            const progressBar = document.querySelector('.progress-bar');
+            let currentIndex = 0;
+
+            function updateSections(index) {
+                sections.forEach((section, i) => {
+                    section.classList.toggle('active', i === index);
+                });
+            }
+
+            function updateProgressBar() {
+                progressBar.style.height = `${((currentIndex + 1) / sections.length) * 100}%`;
+            }
+
+            scrollIndicator.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % sections.length;
+                updateSections(currentIndex);
+                updateProgressBar();
+            });
+
+            updateSections(currentIndex);
+            updateProgressBar();
+        }
+
+        function setupDarkModeToggle() {
+            const darkModeToggle = document.createElement('button');
+            darkModeToggle.textContent = "Dark Mode";
+            darkModeToggle.style.position = "fixed";
+            darkModeToggle.style.top = "15px";
+            darkModeToggle.style.right = "15px";
+            darkModeToggle.style.zIndex = "1001";
+            darkModeToggle.style.padding = "10px 15px";
+            darkModeToggle.style.border = "none";
+            darkModeToggle.style.borderRadius = "5px";
+            darkModeToggle.style.cursor = "pointer";
+
+            document.body.appendChild(darkModeToggle);
+
+            const isDarkMode = localStorage.getItem("dark-mode") === "true";
+            document.body.classList.toggle("dark-mode", isDarkMode);
+
+            darkModeToggle.addEventListener("click", () => {
+                document.body.classList.toggle("dark-mode");
+                localStorage.setItem("dark-mode", document.body.classList.contains("dark-mode"));
+            });
+        }
+
+        function initMenu() {
+            const menuLinks = document.querySelectorAll('nav ul li a');
+            const sections = document.querySelectorAll('section');
+
+            menuLinks.forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const targetSection = document.querySelector(this.getAttribute('href'));
+                    sections.forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    targetSection.classList.add('active');
+
+                    menuLinks.forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                });
+            });
+        }
     </script>
 </head>
 <body>
+    <nav>
+        <ul>
+            <li><a href="#about" class="active">Über mich</a></li>
+            <li><a href="#projects">Projekte</a></li>
+            <li><a href="#contact">Kontakt</a></li>
+        </ul>
+    </nav>
+
     <header class="fixed-header">
         <h1>Tobias Marques</h1>
-        <button id="dark-mode-toggle">Toggle Dark Mode</button>
     </header>
 
-    <div class="container">
-        <section class="about active">
+    <div class="container" style="display: none;">
+        <section id="about" class="active">
             <h2>Über mich</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>
-                        Ich bin Tobias Marques, ein kreativer Kopf mit einer Leidenschaft für...
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section class="education">
-            <h2>Ausbildung</h2>
+            <p>Hallo, ich bin Tobias Marques, ein leidenschaftlicher Webentwickler.</p>
             <ul>
-                <li>Studium der Informatik an der TU Dortmund</li>
-                <li>Weiterbildung in Webentwicklung und Design</li>
+                <li>HTML, CSS, JavaScript</li>
+                <li>React, Node.js</li>
+                <li>Python, Django</li>
             </ul>
         </section>
 
-        <section class="skills">
-            <h2>Fähigkeiten</h2>
-            <ul>
-                <li>Webentwicklung: HTML, CSS, JavaScript</li>
-                <li>Programmierung: Python, Java, C++</li>
-                <li>Datenbanken: MySQL, MongoDB</li>
-            </ul>
-        </section>
-
-        <section class="projects">
+        <section id="projects">
             <h2>Projekte</h2>
+            <p>Hier sind einige meiner Projekte:</p>
             <ul>
-                <li>Projekt 1: Webanwendung zur Verwaltung von ...</li>
-                <li>Projekt 2: Mobile App für ...</li>
-                <li>Projekt 3: Datenanalyse-Tool für ...</li>
+                <li>Projekt A</li>
+                <li>Projekt B</li>
+                <li>Projekt C</li>
             </ul>
         </section>
 
-        <section class="contact">
+        <section id="contact">
             <h2>Kontakt</h2>
-            <p>Erreichen Sie mich über <a href="mailto:tobias@example.com" class="contact-link">tobias@example.com</a>.</p>
+            <p>Du kannst mich über folgende Kanäle erreichen:</p>
+            <ul>
+                <li>Email: tobias@example.com</li>
+                <li>LinkedIn: /tobiasmarques</li>
+            </ul>
         </section>
     </div>
 
-    <footer>
-        &copy; 2024 Tobias Marques - <a href="mailto:tobias@example.com" class="contact-link">Kontaktieren Sie mich</a>
-    </footer>
-
     <div class="scroll-indicator">
-        <img src="scroll-icon.png" alt="Scroll Indicator">
+        <img src="scroll-arrow.png" alt="Scroll Down">
     </div>
 
     <div class="progress-index">
         <div class="progress-bar"></div>
     </div>
+
+    <footer>
+        <p>© 2024 Tobias Marques - <a href="mailto:tobias@example.com" class="contact-link">Kontaktieren Sie mich</a></p>
+    </footer>
 </body>
 </html>
