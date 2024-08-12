@@ -32,7 +32,7 @@
             border-radius: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: left; /* Text linksbündig */
-            transition: opacity 1s ease-in-out;
+            transition: opacity 0.5s ease-in-out;
         }
         section.active {
             display: block;
@@ -67,6 +67,9 @@
             z-index: 1002;
             border-radius: 5px;
             overflow: hidden;
+        }
+        .dropdown-content.open {
+            display: block;
         }
         .dropdown-content select {
             display: block;
@@ -112,6 +115,27 @@
             z-index: 1000;
             font-size: 0.8em;
             color: #777;
+        }
+        .scroll-indicator {
+            position: fixed;
+            bottom: 70px; /* Adjusted to sit above the footer */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            cursor: pointer;
+        }
+        .scroll-indicator img {
+            width: 40px;
+            height: 40px;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
         }
         @media screen and (max-width: 768px) {
             .container {
@@ -180,12 +204,12 @@
             const dropdownContent = document.querySelector('.dropdown-content');
 
             dropdownMenu.addEventListener('click', function() {
-                dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+                dropdownContent.classList.toggle('open');
             });
 
             document.addEventListener('click', function(event) {
                 if (!dropdownMenu.contains(event.target)) {
-                    dropdownContent.style.display = 'none';
+                    dropdownContent.classList.remove('open');
                 }
             });
         }
@@ -198,27 +222,25 @@
             // Zeigt die erste Sektion an
             sections[currentIndex].classList.add('active');
 
+            function changeSection(nextIndex) {
+                if (nextIndex < 0 || nextIndex >= sections.length) return;
+
+                sections[currentIndex].classList.remove('active');
+                currentIndex = nextIndex;
+                sections[currentIndex].classList.add('active');
+            }
+
             function handleScroll(event) {
                 if (isScrolling) return;
 
                 if (event.deltaY > 0 || event.key === "ArrowDown") {
-                    // Scrollen nach unten
-                    if (currentIndex < sections.length - 1) {
-                        sections[currentIndex].classList.remove('active');
-                        currentIndex++;
-                        sections[currentIndex].classList.add('active');
-                    }
+                    changeSection(currentIndex + 1);
                 } else if (event.deltaY < 0 || event.key === "ArrowUp") {
-                    // Scrollen nach oben
-                    if (currentIndex > 0) {
-                        sections[currentIndex].classList.remove('active');
-                        currentIndex--;
-                        sections[currentIndex].classList.add('active');
-                    }
+                    changeSection(currentIndex - 1);
                 }
 
                 isScrolling = true;
-                setTimeout(() => isScrolling = false, 1000); // Verzögerung von 1 Sekunde zwischen Scrolls
+                setTimeout(() => isScrolling = false, 500); // Verzögerung von 0.5 Sekunden zwischen Scrolls
             }
 
             // Scrollen mit dem Mausrad oder den Pfeiltasten
@@ -227,42 +249,35 @@
 
             // Touch-Unterstützung für mobile Geräte
             let touchStartY = 0;
-            let touchEndY = 0;
 
             window.addEventListener('touchstart', function(event) {
                 touchStartY = event.changedTouches[0].screenY;
             });
 
             window.addEventListener('touchend', function(event) {
-                touchEndY = event.changedTouches[0].screenY;
                 if (isScrolling) return;
 
+                let touchEndY = event.changedTouches[0].screenY;
                 if (touchStartY > touchEndY + 50) {
-                    // Nach unten wischen
-                    if (currentIndex < sections.length - 1) {
-                        sections[currentIndex].classList.remove('active');
-                        currentIndex++;
-                        sections[currentIndex].classList.add('active');
-                    }
+                    changeSection(currentIndex + 1);
                 } else if (touchStartY < touchEndY - 50) {
-                    // Nach oben wischen
-                    if (currentIndex > 0) {
-                        sections[currentIndex].classList.remove('active');
-                        currentIndex--;
-                        sections[currentIndex].classList.add('active');
-                    }
+                    changeSection(currentIndex - 1);
                 }
 
                 isScrolling = true;
-                setTimeout(() => isScrolling = false, 1000);
+                setTimeout(() => isScrolling = false, 500);
             });
 
             // Scrollen über das Drop-Down-Menü
             const dropdown = document.querySelector('.dropdown-content select');
             dropdown.addEventListener('change', function() {
-                sections[currentIndex].classList.remove('active');
-                currentIndex = parseInt(this.value);
-                sections[currentIndex].classList.add('active');
+                changeSection(parseInt(this.value));
+            });
+
+            // Klickbare Pfeilspitze
+            const scrollIndicator = document.querySelector('.scroll-indicator');
+            scrollIndicator.addEventListener('click', function() {
+                changeSection(currentIndex + 1);
             });
         }
     </script>
@@ -326,6 +341,10 @@
                 <li><strong>Rotaract</strong> Beschreibung der Tätigkeit.</li>
             </ul>
         </section>
+    </div>
+
+    <div class="scroll-indicator">
+        <img src="https://img.icons8.com/ios-filled/50/000000/down-squared.png" alt="Scrollen Sie nach unten">
     </div>
 
     <footer>
