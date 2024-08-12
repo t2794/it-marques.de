@@ -5,30 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tobias Marques</title>
     <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-            overflow: hidden; /* Verhindert das Scrollen der gesamten Seite */
-        }
         body {
-            display: flex;
-            flex-direction: column;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #86ddec8e;
+            overflow: hidden;
         }
         .container {
-            height: 100vh; /* Macht die Containerhöhe gleich der Ansichtshöhe */
-            overflow: hidden; /* Verhindert das Scrollen innerhalb der Container */
+            position: relative;
+            width: 100%;
+            height: calc(100vh - 60px); /* Platz für den Footer */
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
+            padding: 0 20px;
             box-sizing: border-box;
         }
         section {
-            height: 100vh; /* Macht jede Sektion gleich der Ansichtshöhe */
-            overflow: hidden; /* Verhindert das Scrollen innerhalb der Sektionen */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            display: none;
             width: 80%;
             padding: 20px;
             box-sizing: border-box;
@@ -39,6 +35,7 @@
             transition: opacity 0.5s ease-in-out;
         }
         section.active {
+            display: block;
             opacity: 1;
             z-index: 1;
         }
@@ -49,9 +46,12 @@
             width: 100%;
             background: #fff;
             z-index: 1000;
-            padding: 20px;
+            padding: 0; /* Padding auf 0 setzen, um sicherzustellen, dass der Text mittig ist */
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            text-align: center;
+            display: flex;
+            justify-content: center; /* Horizontales Zentrieren */
+            align-items: center; /* Vertikales Zentrieren */
+            height: 60px; /* Feste Höhe des Headers */
         }
         h1 {
             margin: 0;
@@ -77,19 +77,20 @@
             width: 100%;
             background: #fff;
             text-align: center;
-            padding: 5px;
+            padding: 5px; /* Verkleinert den Footer */
             box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
             z-index: 1000;
-            font-size: 0.7em;
+            font-size: 0.7em; /* Verkleinert die Schriftgröße im Footer */
             color: #777;
         }
-        footer a {
-            color: #777;
+        .contact-link {
+            color: #777; /* Standardfarbe für Kontakt */
             text-decoration: none;
             transition: color 0.3s ease;
         }
-        footer a:hover {
-            color: #007BFF;
+
+        .contact-link:hover {
+            color: #007BFF; /* Hover-Farbe für Kontakt */
         }
         .scroll-indicator {
             position: fixed;
@@ -104,18 +105,19 @@
             width: 40px;
             height: 40px;
             animation: bounce 2s infinite;
+            color: #fff;
         }
-        .scroll-indicator:hover img {
-            transform: scale(1.2); /* Vergrößert das Icon beim Hover */
+        .scroll-indicator:hover {
+            transform: translateX(-50%) scale(1.2); /* Vergrößert den Scroll-Indicator beim Hover */
         }
         .progress-index {
             position: fixed;
-            top: 50%; /* Mittig auf der Höhe positioniert */
-            right: 10px; /* Etwas näher an der rechten Kante */
+            top: 50%;
+            right: 10px; /* Abstand zur rechten Seite */
             transform: translateY(-50%);
             z-index: 1000;
-            width: 8px; /* Breiterer Balken für bessere Sichtbarkeit */
-            height: 70%; /* Höhe des Progress-Index */
+            width: 8px;
+            height: 60%; /* Größe des Progress-Index */
             background: rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             overflow: hidden;
@@ -127,6 +129,23 @@
             border-radius: 10px;
             transition: height 0.3s ease-in-out;
         }
+        .social-icons {
+            display: flex;
+            justify-content: center; /* Zentriert die Icons horizontal */
+            gap: 15px; /* Abstand zwischen den Icons */
+            margin-bottom: 15px; /* Abstand unter den Icons */
+        }
+
+        .icon-link img {
+            width: 24px;
+            height: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .icon-link:hover img {
+            transform: scale(1.2); /* Vergrößert die Icons beim Hover */
+        }
+
         @keyframes bounce {
             0%, 100% {
                 transform: translateY(0);
@@ -147,30 +166,30 @@
             }
             .progress-index {
                 right: 5px; /* Weiter an den Rand geschoben */
-                top: 20%; /* Höher positioniert, um Überlappungen zu vermeiden */
-                height: 60%; /* Angepasste Höhe */
+                top: 50%;
+                transform: translateY(-50%);
+                height: 50%; /* Angepasste Höhe */
+            }
+            .about-content {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .about-text {
+                width: 100%; /* Vollbreite bei kleineren Bildschirmen */
+            }
+
+            .about-photo img {
+                width: 120px; /* Kleinere Fotos für Mobilgeräte */
             }
         }
         @media screen and (max-width: 480px) {
             .progress-index {
                 right: 2px; /* Weiter an den Rand für sehr kleine Bildschirme */
-                top: 15%; /* Weiter nach oben verschoben */
+                top: 50%; /* Weiter nach oben verschoben */
+                transform: translateY(-50%);
                 height: 50%; /* Noch kompakter für kleine Bildschirme */
             }
-        }
-        .social-icons {
-            display: flex;
-            justify-content: center; /* Zentriert die Icons horizontal */
-            gap: 15px; /* Abstand zwischen den Icons */
-            margin-bottom: 15px; /* Abstand unter den Icons */
-        }
-        .icon-link img {
-            width: 24px;
-            height: 24px;
-            transition: transform 0.3s ease;
-        }
-        .icon-link:hover img {
-            transform: scale(1.2); /* Vergrößert die Icons beim Hover */
         }
     </style>
     <script>
@@ -269,61 +288,75 @@
 </head>
 <body>
     <header class="fixed-header">
-        <h1>Tobias Marques</h1>
+        <h1>Tobias Daniel Goncalves Marques</h1> <!-- Zentrierter Name im Header -->
     </header>
 
     <div class="container">
         <section>
             <h2>Über mich</h2>
             <div class="social-icons">
-                <a href="mailto:tobias.marques@example.com" class="icon-link" title="E-Mail">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/Email_Icon.svg" alt="E-Mail Icon">
+                <a href="mailto:deine-email@example.com" class="icon-link" target="_blank">
+                    <img src="https://img.icons8.com/ios-filled/50/777777/new-post.png" alt="Email">
                 </a>
-                <a href="https://github.com/tobiasmarques" class="icon-link" title="GitHub">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub Icon">
+                <a href="https://github.com/dein-github" class="icon-link" target="_blank">
+                    <img src="https://img.icons8.com/ios-filled/50/777777/github.png" alt="GitHub">
                 </a>
             </div>
-            <p>Kurze Beschreibung über mich...</p>
+            <p>Kurze Beschreibung über mich.</p>
         </section>
+        
 
         <section>
-            <h2>Berufserfahrung</h2>
+            <h2>Ausbildung</h2>
             <ul>
-                <li>Position 1 - Unternehmen 1</li>
-                <li>Position 2 - Unternehmen 2</li>
-                <!-- Weitere Berufserfahrungen hier -->
-            </ul>
-        </section>
-
-        <section>
-            <h2>Bildung</h2>
-            <ul>
-                <li>Abschluss 1 - Institution 1</li>
-                <li>Abschluss 2 - Institution 2</li>
-                <!-- Weitere Bildungsstationen hier -->
+                <li><strong>Bachelor Informatik</strong><br>Technische Universität Dortmund, 2023 - Gegenwart</li>
+                <li><strong>Bachelor Elektrotechnik und Informationstechnologie</strong><br>Technische Universität Dortmund, 2022 - 2023</li>                
             </ul>
         </section>
 
         <section>
             <h2>Fähigkeiten</h2>
             <ul>
-                <li>Fähigkeit 1</li>
-                <li>Fähigkeit 2</li>
-                <!-- Weitere Fähigkeiten hier -->
+                <li>Programmiersprachen: Python, Java, C++</li>
+                <li>Webentwicklung: HTML, CSS, JavaScript</li>
+                <li>Data Science: SQL</li>
+                <li>Version Control: Git, GitHub</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Projekte</h2>
+            <ul>
+                <li><strong>Projekt X:</strong> Beschreibung des Projekts, Technologien, die verwendet wurden.</li>
+                <li><strong>Projekt Y:</strong> Beschreibung des Projekts, Technologien, die verwendet wurden.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Erfahrungen</h2>
+            <ul>
+                <li><strong>OGAM</strong> Beschreibung der Tätigkeit.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Soziales: Rotaract</h2>
+            <ul>
+                <li><strong>Rotaract</strong> Beschreibung der Tätigkeit.</li>
             </ul>
         </section>
     </div>
 
-    <footer>
-        Alle Rechte vorbehalten &mdash; <a href="mailto:tobias.marques@example.com">Kontakt</a>
-    </footer>
-
     <div class="scroll-indicator">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Arrow_down_2.svg" alt="Scroll Indicator">
+        <img src="https://img.icons8.com/ios-filled/50/ffffff/down-squared.png" alt="Scrollen Sie nach unten">
     </div>
 
     <div class="progress-index">
         <div class="progress-bar"></div>
     </div>
+
+    <footer>
+        <p>&copy; 2024 Tobias Marques. Alle Rechte vorbehalten | <a href="mailto:deine-email@example.com" class="contact-link">Kontakt</a></p>
+    </footer>    
 </body>
 </html>
