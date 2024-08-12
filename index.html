@@ -129,19 +129,23 @@
             border-radius: 10px;
             transition: height 0.3s ease-in-out;
         }
-        .about-content {
+        .social-icons {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            justify-content: center; /* Zentriert die Icons horizontal */
+            gap: 15px; /* Abstand zwischen den Icons */
+            margin-bottom: 15px; /* Abstand unter den Icons */
         }
-        .about-text {
-            width: 60%; /* Anpassung der Breite des Textes */
+
+        .icon-link img {
+            width: 24px;
+            height: 24px;
+            transition: transform 0.3s ease;
         }
-        .about-photo img {
-            width: 150px; /* Größe des Fotos anpassen */
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+        .icon-link:hover img {
+            transform: scale(1.2); /* Vergrößert die Icons beim Hover */
         }
+
         @keyframes bounce {
             0%, 100% {
                 transform: translateY(0);
@@ -289,13 +293,18 @@
 
     <div class="container">
         <section>
-            <div class="about-content">
-                <div class="about-text">
-                    <h2>Über mich</h2>
-                    <p>Kurze Beschreibung über mich.</p>
-                </div>
+            <h2>Über mich</h2>
+            <div class="social-icons">
+                <a href="mailto:deine-email@example.com" class="icon-link" target="_blank">
+                    <img src="https://img.icons8.com/ios-filled/50/777777/new-post.png" alt="Email">
+                </a>
+                <a href="https://github.com/dein-github" class="icon-link" target="_blank">
+                    <img src="https://img.icons8.com/ios-filled/50/777777/github.png" alt="GitHub">
+                </a>
             </div>
+            <p>Kurze Beschreibung über mich.</p>
         </section>
+        
 
         <section>
             <h2>Ausbildung</h2>
