@@ -52,6 +52,7 @@
         }
         h1 {
             margin: 0;
+            text-align: center; /* Zentriert den Namen im Header */
         }
         h2 {
             color: #333;
@@ -73,10 +74,10 @@
             width: 100%;
             background: #fff;
             text-align: center;
-            padding: 10px;
+            padding: 5px; /* Verkleinert den Footer */
             box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
             z-index: 1000;
-            font-size: 0.8em;
+            font-size: 0.7em; /* Verkleinert die Schriftgröße im Footer */
             color: #777;
         }
         .scroll-indicator {
@@ -95,12 +96,12 @@
         }
         .progress-index {
             position: fixed;
-            top: 50%;
+            top: 50%; /* Positioniert den Progress-Index mittig in der Höhe */
             right: 20px;
             transform: translateY(-50%);
             z-index: 1000;
             width: 5px;
-            height: 50%;
+            height: 50%; /* Höhe des Progress-Index */
             background: rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             overflow: hidden;
@@ -108,7 +109,7 @@
         .progress-bar {
             width: 100%;
             height: 0;
-            background: #007bff;
+            background: #ffffff; /* Ändert den Fortschrittsbalken auf Weiß */
             border-radius: 10px;
             transition: height 0.3s ease-in-out;
         }
@@ -248,26 +249,24 @@
                 } else if (touchStartY < touchEndY - 50) {
                     changeSection(currentIndex - 1);
                 }
-
-                isScrolling = true;
-                setTimeout(() => isScrolling = false, 500);
             });
 
-            // Klickbare Pfeilspitze
-            scrollIndicator.addEventListener('click', function() {
-                changeSection(currentIndex + 1);
-            });
+            // Scroll-Indicator Click Event
+            scrollIndicator.addEventListener('click', () => changeSection(currentIndex + 1));
         }
     </script>
 </head>
 <body>
-    <div class="fixed-header">
-        <h1>
-            Tobias Daniel Goncalves Marques
-        </h1>
-    </div>
+    <header class="fixed-header">
+        <h1>Tobias Marques</h1> <!-- Zentrierter Name im Header -->
+    </header>
 
     <div class="container">
+        <section>
+            <h2>Über mich</h2>
+            <p>Kurze Beschreibung über mich.</p>
+        </section>
+
         <section>
             <h2>Ausbildung</h2>
             <ul>
