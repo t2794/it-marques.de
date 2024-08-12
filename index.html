@@ -6,109 +6,155 @@
     <title>Tobias Marques</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #86ddec8e;
-            color: #333;
-            transition: background-color 0.5s ease, color 0.5s ease;
             overflow: hidden;
-        }
-        body.dark-mode {
-            background-color: #121212;
-            color: #e0e0e0;
-        }
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            height: 60px;
-            background-color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.5s ease, box-shadow 0.5s ease;
-        }
-        body.dark-mode nav {
-            background-color: #1f1f1f;
-        }
-        nav ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            gap: 20px;
-        }
-        nav ul li {
-            display: inline;
-        }
-        nav ul li a {
-            text-decoration: none;
-            font-size: 1em;
-            color: #333;
-            padding: 10px 15px;
-            transition: color 0.3s ease, background-color 0.3s ease;
-        }
-        body.dark-mode nav ul li a {
-            color: #e0e0e0;
-        }
-        nav ul li a:hover,
-        nav ul li a.active {
-            color: #007BFF;
-            background-color: #f0f0f0;
-            border-radius: 5px;
-        }
-        body.dark-mode nav ul li a:hover,
-        body.dark-mode nav ul li a.active {
-            color: #66aaff;
-            background-color: #333333;
         }
         .container {
             position: relative;
             width: 100%;
-            height: calc(100vh - 60px);
+            height: calc(100vh - 60px); /* Platz für den Footer */
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
             padding: 0 20px;
             box-sizing: border-box;
         }
         section {
             display: none;
             width: 80%;
-            max-width: 1000px;
-            padding: 40px;
-            background-color: #fff;
-            border-radius: 15px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+            padding: 20px;
+            box-sizing: border-box;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left; /* Text linksbündig */
+            transition: opacity 0.5s ease-in-out;
         }
         section.active {
             display: block;
             opacity: 1;
-            transform: translateY(0);
+            z-index: 1;
         }
-        body.dark-mode section {
-            background-color: #1f1f1f;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        .fixed-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #fff;
+            z-index: 1000;
+            padding: 0; /* Padding auf 0 setzen, um sicherzustellen, dass der Text mittig ist */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center; /* Horizontales Zentrieren */
+            align-items: center; /* Vertikales Zentrieren */
+            height: 60px; /* Feste Höhe des Headers */
+        }
+        h1 {
+            margin: 0;
+            text-align: center; /* Zentriert den Namen im Header */
+        }
+        h2 {
+            color: #333;
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+        .section-icons {
+            display: flex;
+            align-items: center;
+            gap: 15px; /* Abstand zwischen den Icons */
+            margin-left: 15px; /* Abstand zwischen Überschrift und Icons */
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            background: #e4e4e4;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #fff;
+            text-align: center;
+            padding: 5px; /* Verkleinert den Footer */
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            font-size: 0.7em; /* Verkleinert die Schriftgröße im Footer */
+            color: #777;
+        }
+        .contact-link {
+            color: #777; /* Standardfarbe für Kontakt */
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-link:hover {
+            color: #007BFF; /* Hover-Farbe für Kontakt */
         }
         .scroll-indicator {
             position: fixed;
-            bottom: 50px;
+            bottom: 70px; /* Adjusted to sit above the footer */
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
             cursor: pointer;
-            animation: bounce 2s infinite;
+            transition: transform 0.3s ease;
         }
         .scroll-indicator img {
             width: 40px;
             height: 40px;
+            animation: bounce 2s infinite;
+            color: #fff;
         }
+        .scroll-indicator:hover {
+            transform: translateX(-50%) scale(1.2); /* Vergrößert den Scroll-Indicator beim Hover */
+        }
+        .progress-index {
+            position: fixed;
+            top: 50%;
+            right: 10px; /* Abstand zur rechten Seite */
+            transform: translateY(-50%);
+            z-index: 1000;
+            width: 8px;
+            height: 60%; /* Größe des Progress-Index */
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 0;
+            background: #ffffff; /* Ändert den Fortschrittsbalken auf Weiß */
+            border-radius: 10px;
+            transition: height 0.3s ease-in-out;
+        }
+        .social-icons {
+            display: flex;
+            justify-content: center; /* Zentriert die Icons horizontal */
+            gap: 15px; /* Abstand zwischen den Icons */
+            margin-bottom: 15px; /* Abstand unter den Icons */
+        }
+
+        .icon-link img {
+            width: 24px;
+            height: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .icon-link:hover img {
+            transform: scale(1.2); /* Vergrößert die Icons beim Hover */
+        }
+
         @keyframes bounce {
             0%, 100% {
                 transform: translateY(0);
@@ -117,66 +163,47 @@
                 transform: translateY(-10px);
             }
         }
-        footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: #fff;
-            text-align: center;
-            padding: 10px 0;
-            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-            font-size: 0.8em;
-            color: #777;
-            z-index: 1000;
-            transition: background-color 0.5s ease, color 0.5s ease;
-        }
-        body.dark-mode footer {
-            background-color: #1f1f1f;
-            color: #ccc;
-        }
-        .progress-index {
-            position: fixed;
-            top: 50%;
-            right: 20px;
-            transform: translateY(-50%);
-            z-index: 1000;
-            width: 8px;
-            height: 60%;
-            background: rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .progress-bar {
-            width: 100%;
-            height: 0;
-            background: #007BFF;
-            border-radius: 10px;
-            transition: height 0.3s ease-in-out;
-        }
-        body.dark-mode .progress-bar {
-            background: #66aaff;
-        }
         @media screen and (max-width: 768px) {
+            .container {
+                width: 100%;
+            }
             section {
                 width: 100%;
-                padding: 20px;
+            }
+            .fixed-header h1 {
+                font-size: 1.2em;
             }
             .progress-index {
-                right: 10px;
+                right: 5px; /* Weiter an den Rand geschoben */
+                top: 50%;
+                transform: translateY(-50%);
+                height: 50%; /* Angepasste Höhe */
+            }
+            .about-content {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .about-text {
+                width: 100%; /* Vollbreite bei kleineren Bildschirmen */
+            }
+
+            .about-photo img {
+                width: 120px; /* Kleinere Fotos für Mobilgeräte */
             }
         }
         @media screen and (max-width: 480px) {
             .progress-index {
-                right: 5px;
+                right: 2px; /* Weiter an den Rand für sehr kleine Bildschirme */
+                top: 50%; /* Weiter nach oben verschoben */
+                transform: translateY(-50%);
+                height: 50%; /* Noch kompakter für kleine Bildschirme */
             }
         }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             checkPassword();
-            setupDarkModeToggle();
-            initMenu(); // Menüinitialisierung
         });
 
         async function hashPassword(password) {
@@ -187,16 +214,16 @@
         }
 
         async function checkPassword() {
-            const correctHashedPassword = "248c0cd005cfed5c66e9d1d83c5e91911df94965a3f82ac37d724c7c412a66f2ad5826a5a7d821d7740bb0d175eaa4f5a91d730df6a95d9b3798c156694deb7d";
+            const correctHashedPassword = "248c0cd005cfed5c66e9d1d83c5e91911df94965a3f82ac37d724c7c412a66f2ad5826a5a7d821d7740bb0d175eaa4f5a91d730df6a95d9b3798c156694deb7d"; // SHA-512 von "TobiasCV"
             const userPassword = prompt("Bitte geben Sie das Passwort ein:");
 
             if (userPassword !== null && (await hashPassword(userPassword)) === correctHashedPassword) {
                 document.querySelector('body').style.overflow = 'visible';
                 document.querySelector('.container').style.display = 'flex';
-                initSections();
+                initSections(); // Initialisiert das Scrollen und Anzeigen der Sektionen
             } else {
                 alert("Falsches Passwort.");
-                window.location.reload();
+                window.location.reload(); // Lässt die Seite neu laden, um eine erneute Abfrage zu erzwingen
             }
         }
 
@@ -205,118 +232,131 @@
             const scrollIndicator = document.querySelector('.scroll-indicator');
             const progressBar = document.querySelector('.progress-bar');
             let currentIndex = 0;
+            let isScrolling = false;
 
-            function updateSections(index) {
-                sections.forEach((section, i) => {
-                    section.classList.toggle('active', i === index);
-                });
+            // Zeigt die erste Sektion an
+            sections[currentIndex].classList.add('active');
+
+            function changeSection(nextIndex) {
+                if (nextIndex < 0 || nextIndex >= sections.length) return;
+
+                sections[currentIndex].classList.remove('active');
+                currentIndex = nextIndex;
+                sections[currentIndex].classList.add('active');
+
+                // Scroll-Indikator ausblenden, wenn letzte Seite erreicht ist
+                if (currentIndex === sections.length - 1) {
+                    scrollIndicator.style.display = 'none';
+                } else {
+                    scrollIndicator.style.display = 'block';
+                }
+
+                // Fortschrittsbalken aktualisieren
+                const progress = (currentIndex + 1) / sections.length;
+                progressBar.style.height = `${progress * 100}%`;
             }
 
-            function updateProgressBar() {
-                progressBar.style.height = `${((currentIndex + 1) / sections.length) * 100}%`;
+            function handleScroll(event) {
+                if (isScrolling) return;
+
+                if (event.deltaY > 0 || event.key === "ArrowDown") {
+                    changeSection(currentIndex + 1);
+                } else if (event.deltaY < 0 || event.key === "ArrowUp") {
+                    changeSection(currentIndex - 1);
+                }
+
+                isScrolling = true;
+                setTimeout(() => isScrolling = false, 500);
             }
 
-            scrollIndicator.addEventListener('click', () => {
-                currentIndex = (currentIndex + 1) % sections.length;
-                updateSections(currentIndex);
-                updateProgressBar();
+            // Scroll-Event und Pfeiltasten
+            window.addEventListener('wheel', handleScroll);
+            window.addEventListener('keydown', handleScroll);
+
+            // Touch-Event für mobile Geräte
+            let touchStartY = 0;
+            let touchEndY = 0;
+
+            window.addEventListener('touchstart', event => {
+                touchStartY = event.touches[0].screenY;
             });
 
-            updateSections(currentIndex);
-            updateProgressBar();
-        }
-
-        function setupDarkModeToggle() {
-            const darkModeToggle = document.createElement('button');
-            darkModeToggle.textContent = "Dark Mode";
-            darkModeToggle.style.position = "fixed";
-            darkModeToggle.style.top = "15px";
-            darkModeToggle.style.right = "15px";
-            darkModeToggle.style.zIndex = "1001";
-            darkModeToggle.style.padding = "10px 15px";
-            darkModeToggle.style.border = "none";
-            darkModeToggle.style.borderRadius = "5px";
-            darkModeToggle.style.cursor = "pointer";
-
-            document.body.appendChild(darkModeToggle);
-
-            const isDarkMode = localStorage.getItem("dark-mode") === "true";
-            document.body.classList.toggle("dark-mode", isDarkMode);
-
-            darkModeToggle.addEventListener("click", () => {
-                document.body.classList.toggle("dark-mode");
-                localStorage.setItem("dark-mode", document.body.classList.contains("dark-mode"));
+            window.addEventListener('touchend', event => {
+                touchEndY = event.changedTouches[0].screenY;
+                if (touchStartY > touchEndY + 50) {
+                    changeSection(currentIndex + 1);
+                } else if (touchStartY < touchEndY - 50) {
+                    changeSection(currentIndex - 1);
+                }
             });
-        }
 
-        function initMenu() {
-            const menuLinks = document.querySelectorAll('nav ul li a');
-            const sections = document.querySelectorAll('section');
-
-            menuLinks.forEach(link => {
-                link.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    const targetSection = document.querySelector(this.getAttribute('href'));
-                    sections.forEach(section => {
-                        section.classList.remove('active');
-                    });
-                    targetSection.classList.add('active');
-
-                    menuLinks.forEach(link => {
-                        link.classList.remove('active');
-                    });
-                    this.classList.add('active');
-                });
-            });
+            // Scroll-Indicator Click Event
+            scrollIndicator.addEventListener('click', () => changeSection(currentIndex + 1));
         }
     </script>
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="#about" class="active">Über mich</a></li>
-            <li><a href="#projects">Projekte</a></li>
-            <li><a href="#contact">Kontakt</a></li>
-        </ul>
-    </nav>
-
     <header class="fixed-header">
-        <h1>Tobias Marques</h1>
+        <h1>Tobias Daniel Goncalves Marques</h1> <!-- Zentrierter Name im Header -->
     </header>
 
-    <div class="container" style="display: none;">
-        <section id="about" class="active">
+    <div class="container">
+        <section>
             <h2>Über mich</h2>
-            <p>Hallo, ich bin Tobias Marques, ein leidenschaftlicher Webentwickler.</p>
+            <div class="section-icons">
+                <a href="mailto:deine-email@example.com" class="icon-link" target="_blank">
+                    <img src="https://img.icons8.com/ios-filled/50/777777/new-post.png" alt="Email">
+                </a>
+                <a href="https://github.com/dein-github" class="icon-link" target="_blank">
+                    <img src="https://img.icons8.com/ios-filled/50/777777/github.png" alt="GitHub">
+                </a>
+            </div>
+            <p>Kurze Beschreibung über mich.</p>
+        </section>
+
+        <section>
+            <h2>Ausbildung</h2>
             <ul>
-                <li>HTML, CSS, JavaScript</li>
-                <li>React, Node.js</li>
-                <li>Python, Django</li>
+                <li><strong>Bachelor Informatik</strong><br>Technische Universität Dortmund, 2023 - Gegenwart</li>
+                <li><strong>Bachelor Elektrotechnik und Informationstechnologie</strong><br>Technische Universität Dortmund, 2022 - 2023</li>                
             </ul>
         </section>
 
-        <section id="projects">
+        <section>
+            <h2>Fähigkeiten</h2>
+            <ul>
+                <li>Programmiersprachen: Python, Java, C++</li>
+                <li>Webentwicklung: HTML, CSS, JavaScript</li>
+                <li>Data Science: SQL</li>
+                <li>Version Control: Git, GitHub</li>
+            </ul>
+        </section>
+
+        <section>
             <h2>Projekte</h2>
-            <p>Hier sind einige meiner Projekte:</p>
             <ul>
-                <li>Projekt A</li>
-                <li>Projekt B</li>
-                <li>Projekt C</li>
+                <li><strong>Projekt X:</strong> Beschreibung des Projekts, Technologien, die verwendet wurden.</li>
+                <li><strong>Projekt Y:</strong> Beschreibung des Projekts, Technologien, die verwendet wurden.</li>
             </ul>
         </section>
 
-        <section id="contact">
-            <h2>Kontakt</h2>
-            <p>Du kannst mich über folgende Kanäle erreichen:</p>
+        <section>
+            <h2>Erfahrungen</h2>
             <ul>
-                <li>Email: tobias@example.com</li>
-                <li>LinkedIn: /tobiasmarques</li>
+                <li><strong>OGAM</strong> Beschreibung der Tätigkeit.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Soziales: Rotaract</h2>
+            <ul>
+                <li><strong>Rotaract</strong> Beschreibung der Tätigkeit.</li>
             </ul>
         </section>
     </div>
 
     <div class="scroll-indicator">
-        <img src="scroll-arrow.png" alt="Scroll Down">
+        <img src="https://img.icons8.com/ios-filled/50/ffffff/down-squared.png" alt="Scrollen Sie nach unten">
     </div>
 
     <div class="progress-index">
@@ -324,7 +364,7 @@
     </div>
 
     <footer>
-        <p>© 2024 Tobias Marques - <a href="mailto:tobias@example.com" class="contact-link">Kontaktieren Sie mich</a></p>
-    </footer>
+        <p>&copy; 2024 Tobias Marques. Alle Rechte vorbehalten | <a href="mailto:deine-email@example.com" class="contact-link">Kontakt</a></p>
+    </footer>    
 </body>
 </html>
