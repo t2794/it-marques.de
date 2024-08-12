@@ -130,6 +130,25 @@
             animation: bounce 2s infinite;
             color: #fff;
         }
+        .progress-index {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            z-index: 1000;
+            width: 5px;
+            height: 50%;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 0;
+            background: #007bff;
+            border-radius: 10px;
+            transition: height 0.3s ease-in-out;
+        }
         @keyframes bounce {
             0%, 100% {
                 transform: translateY(0);
@@ -204,7 +223,8 @@
             const dropdownMenu = document.querySelector('.dropdown-menu');
             const dropdownContent = document.querySelector('.dropdown-content');
 
-            dropdownMenu.addEventListener('click', function() {
+            dropdownMenu.addEventListener('click', function(event) {
+                event.stopPropagation(); // Verhindert das Schließen bei Klick auf das Menü
                 dropdownContent.classList.toggle('open');
             });
 
@@ -218,6 +238,7 @@
         function initSections() {
             const sections = document.querySelectorAll('section');
             const scrollIndicator = document.querySelector('.scroll-indicator');
+            const progressBar = document.querySelector('.progress-bar');
             let currentIndex = 0;
             let isScrolling = false;
 
@@ -237,6 +258,10 @@
                 } else {
                     scrollIndicator.style.display = 'block';
                 }
+
+                // Fortschrittsbalken aktualisieren
+                const progress = (currentIndex + 1) / sections.length;
+                progressBar.style.height = `${progress * 100}%`;
             }
 
             function handleScroll(event) {
@@ -249,24 +274,23 @@
                 }
 
                 isScrolling = true;
-                setTimeout(() => isScrolling = false, 500); // Verzögerung von 0.5 Sekunden zwischen Scrolls
+                setTimeout(() => isScrolling = false, 500);
             }
 
-            // Scrollen mit dem Mausrad oder den Pfeiltasten
+            // Scroll-Event und Pfeiltasten
             window.addEventListener('wheel', handleScroll);
             window.addEventListener('keydown', handleScroll);
 
-            // Touch-Unterstützung für mobile Geräte
+            // Touch-Event für mobile Geräte
             let touchStartY = 0;
+            let touchEndY = 0;
 
-            window.addEventListener('touchstart', function(event) {
-                touchStartY = event.changedTouches[0].screenY;
+            window.addEventListener('touchstart', event => {
+                touchStartY = event.touches[0].screenY;
             });
 
-            window.addEventListener('touchend', function(event) {
-                if (isScrolling) return;
-
-                let touchEndY = event.changedTouches[0].screenY;
+            window.addEventListener('touchend', event => {
+                touchEndY = event.changedTouches[0].screenY;
                 if (touchStartY > touchEndY + 50) {
                     changeSection(currentIndex + 1);
                 } else if (touchStartY < touchEndY - 50) {
@@ -352,7 +376,11 @@
     </div>
 
     <div class="scroll-indicator">
-        <img src="https://img.icons8.com/ios-filled/50/000000/down-squared.png" alt="Scrollen Sie nach unten">
+        <img src="https://img.icons8.com/ios-filled/50/ffffff/down-squared.png" alt="Scrollen Sie nach unten">
+    </div>
+
+    <div class="progress-index">
+        <div class="progress-bar"></div>
     </div>
 
     <footer>
