@@ -217,6 +217,7 @@
 
         function initSections() {
             const sections = document.querySelectorAll('section');
+            const scrollIndicator = document.querySelector('.scroll-indicator');
             let currentIndex = 0;
             let isScrolling = false;
 
@@ -229,6 +230,13 @@
                 sections[currentIndex].classList.remove('active');
                 currentIndex = nextIndex;
                 sections[currentIndex].classList.add('active');
+
+                // Scroll-Indikator ausblenden, wenn letzte Seite erreicht ist
+                if (currentIndex === sections.length - 1) {
+                    scrollIndicator.style.display = 'none';
+                } else {
+                    scrollIndicator.style.display = 'block';
+                }
             }
 
             function handleScroll(event) {
@@ -276,7 +284,6 @@
             });
 
             // Klickbare Pfeilspitze
-            const scrollIndicator = document.querySelector('.scroll-indicator');
             scrollIndicator.addEventListener('click', function() {
                 changeSection(currentIndex + 1);
             });
