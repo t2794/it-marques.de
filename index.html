@@ -46,9 +46,12 @@
             width: 100%;
             background: #fff;
             z-index: 1000;
-            padding: 20px;
+            padding: 0; /* Padding auf 0 setzen, um sicherzustellen, dass der Text mittig ist */
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            text-align: center;
+            display: flex;
+            justify-content: center; /* Horizontales Zentrieren */
+            align-items: center; /* Vertikales Zentrieren */
+            height: 60px; /* Feste Höhe des Headers */
         }
         h1 {
             margin: 0;
