@@ -82,6 +82,16 @@
             z-index: 1000;
             font-size: 0.7em; /* Verkleinert die Schriftgröße im Footer */
             color: #777;
+            box-sizing: border-box;
+        }
+        .contact-link {
+            color: #777; /* Standardfarbe für Kontakt */
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-link:hover {
+            color: #007BFF; /* Hover-Farbe für Kontakt */
         }
         .scroll-indicator {
             position: fixed;
@@ -90,12 +100,16 @@
             transform: translateX(-50%);
             z-index: 1000;
             cursor: pointer;
+            transition: transform 0.3s ease;
         }
         .scroll-indicator img {
             width: 40px;
             height: 40px;
             animation: bounce 2s infinite;
             color: #fff;
+        }
+        .scroll-indicator:hover {
+            transform: translateX(-50%) scale(1.2); /* Vergrößert den Scroll-Indicator beim Hover */
         }
         .progress-index {
             position: fixed;
@@ -334,9 +348,12 @@
     </div>
 
     <footer>
-        <p>&copy; 2024 Tobias Marques. Alle Rechte vorbehalten.</p>
-        <p><a href="mailto:info@it-marques.de">Kontakt</a></p>
+        <p style="display: inline-block; margin: 0;">&copy; 2024 Tobias Marques. Alle Rechte vorbehalten.</p>
+        <p style="display: inline-block; float: right; margin: 0;">
+            <a href="mailto:deine-email@example.com" class="contact-link">Kontakt</a>
+        </p>
     </footer>
+    
     
 </body>
 </html>
