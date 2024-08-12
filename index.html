@@ -5,11 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tobias Marques</title>
     <style>
-        body {
+        body.light-mode {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #86ddec8e;
+            overflow: hidden;
+        }
+        body.dark-mode {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #335c6336;
             overflow: hidden;
         }
         .container {
@@ -23,7 +30,7 @@
             padding: 0 20px;
             box-sizing: border-box;
         }
-        section {
+        section.light-mode {
             display: none;
             width: 80%;
             padding: 20px;
@@ -34,12 +41,23 @@
             text-align: left; /* Text linksbündig */
             transition: opacity 0.5s ease-in-out;
         }
+        section.dark-mode {
+            display: none;
+            width: 80%;
+            padding: 20px;
+            box-sizing: border-box;
+            background: #000000;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.247);
+            text-align: left; /* Text linksbündig */
+            transition: opacity 0.5s ease-in-out;
+        }
         section.active {
             display: block;
             opacity: 1;
             z-index: 1;
         }
-        .fixed-header {
+        .fixed-header.light-mode{
             position: fixed;
             top: 0;
             left: 0;
@@ -53,12 +71,32 @@
             align-items: center; /* Vertikales Zentrieren */
             height: 60px; /* Feste Höhe des Headers */
         }
+        .fixed-header.dark-mode {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #000000;
+            z-index: 1000;
+            padding: 0; /* Padding auf 0 setzen, um sicherzustellen, dass der Text mittig ist */
+            box-shadow: 0 2 5px rgba(255, 255, 255, 0.247);
+            display: flex;
+            justify-content: center; /* Horizontales Zentrieren */
+            align-items: center; /* Vertikales Zentrieren */
+            height: 60px; /* Feste Höhe des Headers */
+        }
         h1 {
             margin: 0;
             text-align: center; /* Zentriert den Namen im Header */
         }
-        h2 {
+        h2.light-mode {
             color: #333;
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+        h2.dark-mode {
+            color: #b8b6b6;
             margin: 0;
             display: flex;
             align-items: center;
@@ -73,13 +111,19 @@
             list-style-type: none;
             padding: 0;
         }
-        ul li {
+        ul li.light-mode {
             background: #e4e4e4;
             margin: 5px 0;
             padding: 10px;
             border-radius: 5px;
         }
-        footer {
+        ul li.dark-mode {
+            background: #2c2c2c;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        footer.light-mode {
             position: fixed;
             bottom: 0;
             left: 0;
@@ -91,8 +135,26 @@
             z-index: 1000;
             font-size: 0.7em; /* Verkleinert die Schriftgröße im Footer */
             color: #777;
+        }f
+        footer.dark-mode {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #000000;
+            text-align: center;
+            padding: 5px; /* Verkleinert den Footer */
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            font-size: 0.7em; /* Verkleinert die Schriftgröße im Footer */
+            color: #b6b5b5;
         }
-        .contact-link {
+        .contact-link.light-mode {
+            color: #777; /* Standardfarbe für Kontakt */
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .contact-link.dark-mode {
             color: #777; /* Standardfarbe für Kontakt */
             text-decoration: none;
             transition: color 0.3s ease;
@@ -119,7 +181,7 @@
         .scroll-indicator:hover {
             transform: translateX(-50%) scale(1.2); /* Vergrößert den Scroll-Indicator beim Hover */
         }
-        .progress-index {
+        .progress-index.light-mode{
             position: fixed;
             top: 50%;
             right: 10px; /* Abstand zur rechten Seite */
@@ -131,10 +193,29 @@
             border-radius: 10px;
             overflow: hidden;
         }
-        .progress-bar {
+        .progress-index.dark-mode{
+            position: fixed;
+            top: 50%;
+            right: 10px; /* Abstand zur rechten Seite */
+            transform: translateY(-50%);
+            z-index: 1000;
+            width: 8px;
+            height: 60%; /* Größe des Progress-Index */
+            background: rgba(255, 255, 255, 0.356);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-bar.light-mode{
             width: 100%;
             height: 0;
             background: #ffffff; /* Ändert den Fortschrittsbalken auf Weiß */
+            border-radius: 10px;
+            transition: height 0.3s ease-in-out;
+        }
+        .progress-bar.dark-mode{
+            width: 100%;
+            height: 0;
+            background: #000000; /* Ändert den Fortschrittsbalken auf Weiß */
             border-radius: 10px;
             transition: height 0.3s ease-in-out;
         }
@@ -199,6 +280,11 @@
                 transform: translateY(-50%);
                 height: 50%; /* Noch kompakter für kleine Bildschirme */
             }
+        }
+        .mode-toggle {
+            margin: 20px;
+            padding: 10px;
+            cursor: pointer;
         }
     </style>
     <script>
@@ -293,11 +379,21 @@
             // Scroll-Indicator Click Event
             scrollIndicator.addEventListener('click', () => changeSection(currentIndex + 1));
         }
+
+        const toggleButton = document.querySelector('.mode-toggle');
+        const body = document.body;
+
+        toggleButton.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            body.classList.toggle('light-mode');
+            toggleButton.textContent = body.classList.contains('dark-mode') ? 'Wechsel zu Light Mode' : 'Wechsel zu Dark Mode';
+        });
     </script>
 </head>
 <body>
     <header class="fixed-header">
         <h1>Tobias Daniel Goncalves Marques</h1> <!-- Zentrierter Name im Header -->
+        <button class="mode-toggle">Wechsel zu Dark Mode</button>
     </header>
 
     <div class="container">
