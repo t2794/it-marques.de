@@ -96,12 +96,12 @@
         }
         .progress-index {
             position: fixed;
-            top: 70%; /* Positioniert den Progress-Index mittig in der Höhe */
-            right: 10px; /* Etwas näher an der rechten Kante */
+            top: 50%;
+            right: 10px; /* Abstand zur rechten Seite */
             transform: translateY(-50%);
             z-index: 1000;
-            width: 8px; /* Breiterer Balken für bessere Sichtbarkeit */
-            height: 70%; /* Höhe des Progress-Index */
+            width: 8px;
+            height: 60%; /* Größe des Progress-Index */
             background: rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             overflow: hidden;
@@ -112,6 +112,19 @@
             background: #ffffff; /* Ändert den Fortschrittsbalken auf Weiß */
             border-radius: 10px;
             transition: height 0.3s ease-in-out;
+        }
+        .about-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .about-text {
+            width: 60%; /* Anpassung der Breite des Textes */
+        }
+        .about-photo img {
+            width: 150px; /* Größe des Fotos anpassen */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         @keyframes bounce {
             0%, 100% {
@@ -133,14 +146,28 @@
             }
             .progress-index {
                 right: 5px; /* Weiter an den Rand geschoben */
-                top: 20%; /* Höher positioniert, um Überlappungen zu vermeiden */
-                height: 60%; /* Angepasste Höhe */
+                top: 50%;
+                transform: translateY(-50%);
+                height: 50%; /* Angepasste Höhe */
+            }
+            .about-content {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .about-text {
+                width: 100%; /* Vollbreite bei kleineren Bildschirmen */
+            }
+
+            .about-photo img {
+                width: 120px; /* Kleinere Fotos für Mobilgeräte */
             }
         }
         @media screen and (max-width: 480px) {
             .progress-index {
                 right: 2px; /* Weiter an den Rand für sehr kleine Bildschirme */
-                top: 15%; /* Weiter nach oben verschoben */
+                top: 50%; /* Weiter nach oben verschoben */
+                transform: translateY(-50%);
                 height: 50%; /* Noch kompakter für kleine Bildschirme */
             }
         }
@@ -246,8 +273,15 @@
 
     <div class="container">
         <section>
-            <h2>Über mich</h2>
-            <p>Kurze Beschreibung über mich.</p>
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Über mich</h2>
+                    <p>Kurze Beschreibung über mich.</p>
+                </div>
+                <div class="about-photo">
+                    <img src="pfad-zu-deinem-bewerbungsfoto.jpg" alt="Bewerbungsfoto">
+                </div>
+            </div>
         </section>
 
         <section>
